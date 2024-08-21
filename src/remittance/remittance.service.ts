@@ -11,6 +11,10 @@ export class RemittanceService {
         return await this.remittancePGRepository.getRemittance(pubIdRemittance);
     }
 
+    async getRemittanceData(isoCodOrigin: String, isoCodDestiny: String) {
+        return await this.remittancePGRepository.getRemittanceData(isoCodOrigin, isoCodDestiny);
+    }
+
     async createRemittance(
         clientId: number,
         rate: RemittanceRate,

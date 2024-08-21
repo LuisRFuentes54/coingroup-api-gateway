@@ -21,6 +21,17 @@ export class RemittanceController {
         return await this.remittanceService.getRemittance(pubIdRemittance);
     }
 
+    @Get('/data/:isoCodOrigin/:isoCodDestiny')
+    @ApiOperation({ summary: 'Get the data to create a remittance' })
+    @ApiResponse({ status: 200, description: 'Return all the data to create the remittance (banks, bank accounts, doc types, etc.)' })
+    @ApiResponse({ status: 500, description: 'Server error' })
+    async getRemittanceData(
+        @Param('isoCodOrigin') isoCodOrigin: String,
+        @Param('isoCodDestiny') isoCodDestiny: String,
+    ) {
+        return await this.remittanceService.getRemittanceData(isoCodOrigin, isoCodDestiny);
+    }
+
     @Post('/')
     @UseInterceptors(FileInterceptor('receipt'))
     @UsePipes(ValidationPipe)
