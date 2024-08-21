@@ -1,7 +1,9 @@
-import { Body, Controller, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateRemittanceDto } from "./dto/createRemittance.dto";
 import { RemittanceService } from "./remittance.service";
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from "@nestjs/platform-express";
+import { plainToClass } from 'class-transformer';
 
 @Controller('remittance')
 @ApiTags('Remittance')
@@ -20,26 +22,31 @@ export class RemittanceController {
     }
 
     @Post('/')
+    @UseInterceptors(FileInterceptor('receipt'))
     @UsePipes(ValidationPipe)
     async initRemittance(
-        @Body() data: CreateRemittanceDto
+        @UploadedFile() file: Express.Multer.File,
+        @Body() data: any
     ) {
-        await this.remittanceService.createRemittance(
-            data.clientId,
-            data.rate,
-            data.idCountryOrigin,
-            data.idCountryDestiny,
-            data.idCurrencyOrigin,
-            data.idCurrencyDestiny,
-            data.idBankAccount,
-            data.depositAmount,
-            data.commission,
-            data.originAmount,
-            data.destinyAmount,
-            data.beneficiaries,
+
+        const remittanceInfo = plainToClass(CreateRemittanceDto, JSON.parse(data.remittanceInfo));
+        const remittance = await this.remittanceService.createRemittance(
+            remittanceInfo.clientId,
+            remittanceInfo.rate,
+            remittanceInfo.idCountryOrigin,
+            remittanceInfo.idCountryDestiny,
+            remittanceInfo.idCurrencyOrigin,
+            remittanceInfo.idCurrencyDestiny,
+            remittanceInfo.idBankAccount,
+            remittanceInfo.depositAmount,
+            remittanceInfo.commission,
+            remittanceInfo.originAmount,
+            remittanceInfo.destinyAmount,
+            remittanceInfo.beneficiaries,
             '/repo-cr/assets/1691187008314.jpg',
-            data.refNumber
+            remittanceInfo.refNumber
         );
+
         return {
             msg: "Remittance created"
         }

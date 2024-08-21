@@ -45,6 +45,7 @@ export class RemittancePGRepository {
             pathName,
             refNumber
         ]);
-        return resp[0];
+        console.log(resp);
+        return resp;
     }
 }
