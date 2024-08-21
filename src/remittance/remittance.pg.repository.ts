@@ -24,28 +24,26 @@ export class RemittancePGRepository {
         return resp[0];
     }
 
-    async createRemittance(clientId: number, idOriginCountry: number, idOriginCurrency: number, idOriginBank: number, idHolderBank: number, totalDeposited: number, totalComission: number, originRemittance: number, destinyRemittance: number, rate: RemittanceRate, idDestinyCountry: number, idDestinyCurrency: number, beneficiaries: RemittanceBeneficiary[], refNumber: String, urgent: boolean): Promise<any> {
+    async createRemittance(clientId: number, rate: RemittanceRate, idCountryOrigin: number, idCountryDestiny: number, idCurrencyOrigin: number, idCurrencyDestiny: number, idBankAccount: number, depositAmount: number, commission: number, originAmount: number, destinyAmount: number, beneficiaries: RemittanceBeneficiary[], pathName: String, refNumber: String): Promise<any> {
         const resp = await this.dataSource.query(`
-            select prc_mng.sp_sixmap_init_remittances($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18) as info;
+            select prc_mng.sp_third_party_init_remittances($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) as info;
         `, [
             clientId,
-            idOriginCountry,
-            idDestinyCountry,
-            idOriginCurrency,
-            idDestinyCurrency,
-            idHolderBank,
-            totalDeposited,
-            totalComission,
-            originRemittance,
-            destinyRemittance,
             rate.idRate,
-            rate.typeName,
+            rate.factor,
+            rate.operation,
+            idCountryOrigin,
+            idCountryDestiny,
+            idCurrencyOrigin,
+            idCurrencyDestiny,
+            idBankAccount,
+            depositAmount,
+            commission,
+            originAmount,
+            destinyAmount,
             beneficiaries,
-            '/repo-cr/assets/1691187008314.jpg',
-            refNumber,
-            urgent,
-            'adminsito',
-            0
+            pathName,
+            refNumber
         ]);
         return resp[0];
     }

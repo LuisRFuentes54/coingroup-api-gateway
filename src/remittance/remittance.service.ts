@@ -11,8 +11,24 @@ export class RemittanceService {
         return await this.remittancePGRepository.getRemittance(pubIdRemittance);
     }
 
-    async createRemittance(clientId: number, idOriginCountry: number, idOriginCurrency: number, idOriginBank: number, idHolderBank: number, totalDeposited: number, totalComission: number, originRemittance: number, destinyRemittance: number, rate: RemittanceRate, idDestinyCountry: number, idDestinyCurrency: number, beneficiaries: RemittanceBeneficiary[], refNumber: String, urgent: boolean): Promise<any> {
-        await this.remittancePGRepository.createRemittance(clientId, idOriginCountry, idOriginCurrency, idOriginBank, idHolderBank, totalDeposited, totalComission, originRemittance, destinyRemittance, rate, idDestinyCountry, idDestinyCurrency, beneficiaries, refNumber, urgent);
+    async createRemittance(
+        clientId: number,
+        rate: RemittanceRate,
+        idCountryOrigin: number,
+        idCountryDestiny: number,
+        idCurrencyOrigin: number,
+        idCurrencyDestiny: number,
+        idBankAccount: number,
+        depositAmount: number,
+        commission: number,
+        originAmount: number,
+        destinyAmount: number,
+        beneficiaries: RemittanceBeneficiary[],
+        pathName: String,
+        refNumber: String
+    ): Promise<any> {
+        const resp = await this.remittancePGRepository.createRemittance(clientId, rate, idCountryOrigin, idCountryDestiny, idCurrencyOrigin, idCurrencyDestiny, idBankAccount, depositAmount, commission, originAmount, destinyAmount, beneficiaries, pathName, refNumber);
+        return resp;
     }
 
 }

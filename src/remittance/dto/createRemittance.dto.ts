@@ -1,83 +1,113 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsNumber, IsString, IsNotEmpty } from "class-validator";
 
 export class RemittanceBeneficiary {
+    
+    @IsNotEmpty()
+    @IsString()
     ownerName: String;
+    
+    @IsNotEmpty()
+    @IsString()
     identification: String;
+    
+    @IsNotEmpty()
+    @IsString()
     account: String;
+    
+    @IsNotEmpty()
+    @IsString()
     accountType: String;
+    
+    @IsNotEmpty()
+    @IsString()
     phoneNumber: String;
+    
+    @IsNotEmpty()
+    @IsString()
     email: String;
+    
+    @IsNotEmpty()
+    @IsNumber()
     partialAmount: number;
+    
+    @IsNotEmpty()
+    @IsNumber()
     idDestinyBank: number;
+    
+    @IsNotEmpty()
+    @IsNumber()
     idPayMethod: number;
+    
+    @IsNotEmpty()
+    @IsNumber()
     docType: number;
+    
+    @IsNotEmpty()
+    @IsString()
     relation: String;
 }
 
 export class RemittanceRate {
+    
+    @IsNumber()
     idRate: number;
-    rate: number;
+    
+    @IsNumber()
+    factor: number;
+    
+    @IsString()
     operation: String;
-    rateName: String;
-    typeName: String;
 }
 
 export class CreateRemittanceDto {
-    
-    @IsNumber()
+
     @IsNotEmpty()
+    @IsNumber()
     clientId: number;
-        
-    @IsNumber()
-    @IsNotEmpty()
-    idOriginCountry: number;
-        
-    @IsNumber()
-    @IsNotEmpty()
-    idOriginCurrency: number;
-    
-    @IsNumber()
-    @IsNotEmpty()
-    idOriginBank: number;
-    
-    @IsNumber()
-    @IsNotEmpty()
-    idHolderBank: number;
-    
-    @IsNumber()
-    @IsNotEmpty()
-    totalDeposited: number;
-    
-    @IsNumber()
-    @IsNotEmpty()
-    totalComission: number;
-    
-    @IsNumber()
-    @IsNotEmpty()
-    originRemittance: number;
-    
-    @IsNumber()
-    @IsNotEmpty()
-    destinyRemittance: number;
     
     @IsNotEmpty()
     rate: RemittanceRate;
     
-    @IsNumber()
     @IsNotEmpty()
-    idDestinyCountry: number;
+    @IsNumber()
+    idCountryOrigin: number;
     
-    @IsNumber()
     @IsNotEmpty()
-    idDestinyCurrency: number;
+    @IsNumber()
+    idCountryDestiny: number;
+    
+    @IsNotEmpty()
+    @IsNumber()
+    idCurrencyOrigin: number;
+    
+    @IsNotEmpty()
+    @IsNumber()
+    idCurrencyDestiny: number;
+    
+    @IsNotEmpty()
+    @IsNumber()
+    idBankAccount: number;
+    
+    @IsNotEmpty()
+    @IsNumber()
+    depositAmount: number;
+    
+    @IsNotEmpty()
+    @IsNumber()
+    commission: number;
+    
+    @IsNotEmpty()
+    @IsNumber()
+    originAmount: number;
+    
+    @IsNotEmpty()
+    @IsNumber()
+    destinyAmount: number;
     
     @IsNotEmpty()
     beneficiaries: RemittanceBeneficiary[];
     
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     refNumber: String;
-
-    @IsBoolean()
-    urgent: boolean;
 }

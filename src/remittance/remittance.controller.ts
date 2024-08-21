@@ -26,20 +26,19 @@ export class RemittanceController {
     ) {
         await this.remittanceService.createRemittance(
             data.clientId,
-            data.idOriginCountry,
-            data.idOriginCurrency,
-            data.idOriginBank,
-            data.idHolderBank,
-            data.totalDeposited,
-            data.totalComission,
-            data.originRemittance,
-            data.destinyRemittance,
             data.rate,
-            data.idDestinyCountry,
-            data.idDestinyCurrency,
+            data.idCountryOrigin,
+            data.idCountryDestiny,
+            data.idCurrencyOrigin,
+            data.idCurrencyDestiny,
+            data.idBankAccount,
+            data.depositAmount,
+            data.commission,
+            data.originAmount,
+            data.destinyAmount,
             data.beneficiaries,
-            data.refNumber,
-            data.urgent
+            '/repo-cr/assets/1691187008314.jpg',
+            data.refNumber
         );
         return {
             msg: "Remittance created"
