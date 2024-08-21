@@ -8,7 +8,7 @@ import { Multer } from 'multer';
 @Module({
   imports: [
     MulterModule.register({
-      dest: './uploads', // Directorio donde se guardarán los archivos
+      dest: process.env.FILES_LOCATION, // Directorio donde se guardarán los archivos
     }),
   ],
   controllers: [RemittanceController],

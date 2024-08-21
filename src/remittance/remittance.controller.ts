@@ -39,7 +39,6 @@ export class RemittanceController {
         @UploadedFile() file: Express.Multer.File,
         @Body() data: any
     ) {
-
         const remittanceInfo = plainToClass(CreateRemittanceDto, JSON.parse(data.remittanceInfo));
         const remittance = await this.remittanceService.createRemittance(
             remittanceInfo.clientId,
@@ -57,7 +56,6 @@ export class RemittanceController {
             '/repo-cr/assets/1691187008314.jpg',
             remittanceInfo.refNumber
         );
-
         return {
             msg: "Remittance created"
         }
