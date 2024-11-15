@@ -7,11 +7,11 @@ export class RemittanceService {
 
     constructor(private remittancePGRepository: RemittancePGRepository) {}
 
-    async getRemittance(pubIdRemittance: String) {
+    async getRemittance(pubIdRemittance: String): Promise<any> {
         return await this.remittancePGRepository.getRemittance(pubIdRemittance);
     }
 
-    async getRemittanceData(isoCodOrigin: String, isoCodDestiny: String) {
+    async getRemittanceData(isoCodOrigin: String, isoCodDestiny: String): Promise<any> {
         return await this.remittancePGRepository.getRemittanceData(isoCodOrigin, isoCodDestiny);
     }
 

@@ -18,19 +18,17 @@ export class RemittancePGRepository {
     async getRemittance(pubIdRemittance: String): Promise<any> {
         const resp = await this.dataSource.query(`
             select *
-            from prc_mng.lnk_cr_remittances
-            where id_remittance_pub = '${pubIdRemittance}'
+            from prc_mng.sp_process_get_info('${pubIdRemittance}') as remittance
         `);
-        return resp[0];
+        console.log(resp[0])
+        return resp[0].remittance;
     }
 
     async getRemittanceData(isoCodOrigin: String, isoCodDestiny: String): Promise<any> {
         const resp = await this.dataSource.query(`
             select *
             from prc_mng.sp_get_remittance_data_to_third($1, $2) as data;
-        `, [
-            isoCodOrigin, isoCodDestiny
-        ]);
+        `, [ isoCodOrigin, isoCodDestiny ]);
         return resp[0].data;
     }
 
