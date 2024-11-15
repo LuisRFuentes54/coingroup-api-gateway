@@ -55,4 +55,13 @@ export class RemittancePGRepository {
         ]);
         return resp[0].data;
     }
+
+    async remittanceVerifyOrigin(remittancePubID: String, verify: boolean, idBankAccount: number, transferName: String, dateReceived: number, verifNumber: String, confirmNumber: String): Promise<any> {
+        const resp = await this.dataSource.query(`
+            select * from prc_mng.sp_ms_cr_origin_transactions_verify_transaction_third($1, $2, $3, $4, $5, $6, $7) as info;
+        `, [
+            remittancePubID, verify, idBankAccount, transferName, dateReceived, verifNumber, confirmNumber
+        ]);
+        return resp[0].data;
+    }
 }

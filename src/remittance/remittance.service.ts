@@ -35,4 +35,9 @@ export class RemittanceService {
         return resp;
     }
 
+    async remittanceVerifyOrigin(remittancePubID: String, verify: boolean, idBankAccount: number, transferName: String, dateReceived: number, verifNumber: String, confirmNumber: String): Promise<any> {
+        const resp = await this.remittancePGRepository.remittanceVerifyOrigin(remittancePubID, verify, idBankAccount, transferName, dateReceived, verifNumber, confirmNumber);
+        return resp;
+    }
+
 }

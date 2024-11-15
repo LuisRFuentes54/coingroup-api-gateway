@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Param, Post, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateRemittanceDto } from "./dto/createRemittance.dto";
+import { remittanceVerifyOriginDto } from "./dto/remittanceVerifyOrigin.dto";
 import { RemittanceService } from "./remittance.service";
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from "@nestjs/platform-express";
@@ -55,6 +56,25 @@ export class RemittanceController {
             remittanceInfo.beneficiaries,
             '/repo-cr/assets/1691187008314.jpg',
             remittanceInfo.refNumber
+        );
+        return {
+            msg: "Remittance created"
+        }
+    }
+
+    @Patch('/:pubRemittanceId')
+    @UsePipes(ValidationPipe)
+    async remittanceVerifyOrigin(
+        @Body() data: remittanceVerifyOriginDto
+    ) {
+        const resp = await this.remittanceService.remittanceVerifyOrigin(
+            data.remittancePubID,
+            data.verify,
+            data.idBankAccount,
+            data.transferName,
+            data.dateReceived,
+            data.verifNumber,
+            data.confirmNumber
         );
         return {
             msg: "Remittance created"
